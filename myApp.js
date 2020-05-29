@@ -39,8 +39,6 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 // fields, use simple validators like `required` or `unique`, and set
 // `default` values. See the [mongoose docs](http://mongoosejs.com/docs/guide.html).
 
-// <Your code here >
-
 var Schema = mongoose.Schema;
 
 var   personSchema = new Schema({
@@ -86,10 +84,17 @@ var Person = mongoose.model('Person', personSchema);
 //    ...do your stuff here...
 // });
 
-var createAndSavePerson = function(done) {
+var createAndSavePerson = (done) => {
+  var somePerson = new Person({
+    name: "Some Person",
+    age: 38,
+    favoriteFoods: ["Food", "More food"]
+  });
   
-  done(null /*, data*/);
-
+  somePerson.save((err, data) => {
+    if(err) return console.error(err);
+    done(null, data);
+  })
 };
 
 /** 4) Create many People with `Model.create()` */
