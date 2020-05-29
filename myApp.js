@@ -243,8 +243,14 @@ var findEditThenSave = function(personId, done) {
 
 var findAndUpdate = function(personName, done) {
   var ageToSet = 20;
-
-  done(null/*, data*/);
+  
+  Person.findOneAndUpdate({name: personName}, { new: true }, (err, data) => {
+    data.age = ageToSet;
+    data.save((err, data) => {
+      if (err) return console.error(err);
+      done(null, data);
+    });
+  });
 };
 
 /** # CRU[D] part IV - DELETE #
