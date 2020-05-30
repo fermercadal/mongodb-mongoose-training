@@ -309,8 +309,15 @@ var removeManyPeople = function(done) {
 
 var queryChain = function(done) {
   var foodToSearch = "burrito";
-  
-  done(null/*, data*/);
+
+  Person.find({favoriteFoods: foodToSearch}) //Fin people who likes burrito
+    .sort({name: 1}) // Sort results by name
+    .limit(2) // Limit amount of documents
+    .select({age: 0}) // Hide age (0 is hide, 1 is visible)
+    .exec((err, data) => {
+      if(err) return console.error(err);
+      done(null, data);
+    });
 };
 
 /** **Well Done !!**
